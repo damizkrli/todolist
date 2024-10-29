@@ -14,16 +14,8 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/task')]
 final class TaskController extends AbstractController
 {
-    #[Route(name: 'app_task_index', methods: ['GET'])]
-    public function index(TaskRepository $taskRepository): Response
-    {
-        return $this->render('task/index.html.twig', [
-            'tasks' => $taskRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_task_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route(name: 'app_task_index', methods: ['GET', 'POST'])]
+    public function index(TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -36,9 +28,9 @@ final class TaskController extends AbstractController
             return $this->redirectToRoute('app_task_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('task/new.html.twig', [
-            'task' => $task,
-            'form' => $form,
+        return $this->render('task/index.html.twig', [
+            'tasks' => $taskRepository->findAll(),
+            'form' => $form->createView(),
         ]);
     }
 
