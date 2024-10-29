@@ -13,5 +13,10 @@ favorite database
 6. execute migrations \
 ```php bin/console doctrine:migrations:migrate```
 
-At this point, you should have an operational database, and you can add tasks. 
+At this point, you should have an operational database, and you can add tasks.
+If you need, more users you can run fixtures 
+
+```bin/console doctrine:fixture:load -n```
+
+Concerning Tasks, I let your imagination create and test.
 Enjoy 🖖
