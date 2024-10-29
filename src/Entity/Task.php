@@ -52,6 +52,10 @@ class Task
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tasks')]
     private Collection $users;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
+
     public function __toString(): string
     {
         return $this->name ?? 'New Task';
@@ -179,6 +183,18 @@ class Task
     public function removeUser(User $user): static
     {
         $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

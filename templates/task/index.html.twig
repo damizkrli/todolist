@@ -12,6 +12,7 @@
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Author</th>
                         <th>Category</th>
                         <th>Status</th>
                         <th>LimitDate</th>
@@ -25,6 +26,7 @@
                         {% if not task.status is same as 'Finie' %}
                         <tr>
                             <td>{{ task.name }}</td>
+                            <td>{{ task.author ? task.author.firstname ~ ' ' ~ task.author.lastname : 'Unknown' }}</td>
                             <td>{{ task.category }}</td>
                             <td>{{ task.status }}</td>
                             <td>{{ task.limitDate ? task.limitDate|date('d-m-Y') : '' }}</td>
