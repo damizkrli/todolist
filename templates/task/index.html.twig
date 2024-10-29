@@ -11,34 +11,32 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Name</th>
-                        <th>Description</th>
                         <th>Category</th>
                         <th>LimitDate</th>
                         <th>CreatedAt</th>
-                        <th>UpdatedAt</th>
                         <th>actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for task in tasks %}
                         <tr>
-                            <td>{{ task.id }}</td>
                             <td>{{ task.name }}</td>
-                            <td>{{ task.description }}</td>
                             <td>{{ task.category }}</td>
                             <td>{{ task.limitDate ? task.limitDate|date('d-m-Y') : '' }}</td>
                             <td>{{ task.createdAt ? task.createdAt|date('d-m-Y') : '' }}</td>
-                            <td>{{ task.updatedAt ? task.updatedAt|date('d-m-Y') : '' }}</td>
                             <td>
-                                <a href="{{ path('app_task_show', {'id': task.id}) }}">show</a>
-                                <a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>
+                                <a href="{{ path('app_task_show', {'id': task.id}) }}">
+                                    <i class="fa-regular fa-eye me-3 btn btn-info text-decoration-none"></i>
+                                </a>
+                                <a href="{{ path('app_task_edit', {'id': task.id}) }}">
+                                    <i class="fa-regular fa-pen-to-square btn btn-secondary text-decoration-none"></i>
+                                </a>
                             </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="8">no records found</td>
+                            <td colspan="8" class="text-end">ADD A TASK <i class="fa-solid fa-arrow-right-long"></i></td>
                         </tr>
                     {% endfor %}
                     </tbody>
