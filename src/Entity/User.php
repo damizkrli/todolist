@@ -24,6 +24,19 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'users')]
+    private Collection $tasks;
+
+    public function __toString(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,5 +76,10 @@ class User
         $this->email = $email;
 
         return $this;
+    }
+
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Task;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -52,6 +54,14 @@ class TaskType extends AbstractType
                 'html5' => true,
                 'required' => false,
             ])
+            ->add('users', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => function (User $user) {
+                    return $user->getFirstname() . ' ' . $user->getLastname();
+                },
+                'multiple' => true, // Permet de sélectionner plusieurs utilisateurs
+                'expanded' => true, // Affiche les utilisateurs sous forme de cases à cocher
+            ]);
         ;
     }
 

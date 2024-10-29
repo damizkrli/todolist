@@ -15,6 +15,7 @@
                         <th>Category</th>
                         <th>LimitDate</th>
                         <th>CreatedAt</th>
+                        <th>Users associated</th>
                         <th>actions</th>
                     </tr>
                     </thead>
@@ -25,6 +26,15 @@
                             <td>{{ task.category }}</td>
                             <td>{{ task.limitDate ? task.limitDate|date('d-m-Y') : '' }}</td>
                             <td>{{ task.createdAt ? task.createdAt|date('d-m-Y') : '' }}</td>
+                            <td>
+                                {% if task.users is not empty %}
+                                    {% for user in task.users %}
+                                        <p>{{ user.firstname }} {{ user.lastname }}</p>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>Aucun utilisateur associé</p>
+                                {% endif %}
+                            </td>
                             <td>
                                 <div class="button-group">
                                     <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-info me-3">
