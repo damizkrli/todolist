@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-8">
                 <h1>My tasks</h1>
@@ -13,6 +13,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Category</th>
+                        <th>Status</th>
                         <th>LimitDate</th>
                         <th>CreatedAt</th>
                         <th>Users associated</th>
@@ -21,9 +22,11 @@
                     </thead>
                     <tbody>
                     {% for task in tasks %}
+                        {% if not task.status is same as 'Finie' %}
                         <tr>
                             <td>{{ task.name }}</td>
                             <td>{{ task.category }}</td>
+                            <td>{{ task.status }}</td>
                             <td>{{ task.limitDate ? task.limitDate|date('d-m-Y') : '' }}</td>
                             <td>{{ task.createdAt ? task.createdAt|date('d-m-Y') : '' }}</td>
                             <td>
@@ -53,6 +56,7 @@
 
                             </td>
                         </tr>
+                        {% endif %}
                     {% else %}
                         <tr>
                             <td colspan="8" class="text-end">ADD A TASK <i class="fa-solid fa-arrow-right-long"></i></td>

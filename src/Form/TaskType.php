@@ -8,6 +8,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,10 +17,19 @@ class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+        $isEditMode = $options['edit_mode'];
+
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('category')
+            ->add('name', TextType::class, [
+                'label' => 'Name',
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
+            ])
+            ->add('category', TextType::class, [
+                'label' => 'Category',
+            ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
                     'En attente' => Task::STATUS_PENDING,
@@ -40,19 +51,31 @@ class TaskType extends AbstractType
                 "data" => Task::PRIORITY_MEDIUM,
                 'required'    => false,
                 'multiple' => false,
+                'attr' => [
+                    'readonly' => $isEditMode,
+                ],
             ])
             ->add('limitDate', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
+                'attr' => [
+                    'readonly' => $isEditMode,
+                ],
             ])
             ->add('createdAt', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
+                'attr' => [
+                    'readonly' => $isEditMode,
+                ],
             ])
             ->add('updatedAt', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => false,
+                'attr' => [
+                    'readonly' => $isEditMode,
+                ],
             ])
             ->add('users', EntityType::class, [
                 'class' => User::class,
@@ -69,6 +92,9 @@ class TaskType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Task::class,
+            'edit_mode' => false,
         ]);
+
+        $resolver->setAllowedTypes('edit_mode', 'bool');
     }
 }
