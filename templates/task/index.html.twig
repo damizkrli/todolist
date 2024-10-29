@@ -25,9 +25,9 @@
                 <td>{{ task.name }}</td>
                 <td>{{ task.description }}</td>
                 <td>{{ task.category }}</td>
-                <td>{{ task.limitDate ? task.limitDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ task.createdAt ? task.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ task.updatedAt ? task.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ task.limitDate ? task.limitDate|date('d-m-Y') : '' }}</td>
+                <td>{{ task.createdAt ? task.createdAt|date('d-m-Y') : '' }}</td>
+                <td>{{ task.updatedAt ? task.updatedAt|date('d-m-Y') : '' }}</td>
                 <td>
                     <a href="{{ path('app_task_show', {'id': task.id}) }}">show</a>
                     <a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>

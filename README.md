@@ -13,9 +13,5 @@ favorite database
 6. execute migrations \
 ```php bin/console doctrine:migrations:migrate```
 
-At this point, you should have an operational database. Then we're going to add some datas.
-
-1. install fixtures \
-``composer require --dev orm-fixtures`
-2. load fixtures \
-``php bin/console doctrine:fixtures:load``
+At this point, you should have an operational database, and you can add tasks. 
+Enjoy 🖖

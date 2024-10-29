@@ -4,37 +4,53 @@ namespace App\Form;
 
 use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TaskType extends AbstractType
 {
-    private const STATUS = [
-        "En attente" => "En attente",
-        "En cours" => "En cours",
-        "Finie" =>  "Finie",
-    ];
-
-    private const PRIORITY = [
-        "Basse" => "Basse",
-        "Moyenne" => "Moyenne",
-        "Haute" => "Haute",
-    ];
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name')
             ->add('description')
             ->add('category')
-            ->add('limitDate', null, [
-                'widget' => 'single_text',
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'En attente' => Task::STATUS_PENDING,
+                    'En cours' => Task::STATUS_PROGRESS,
+                    'Finie' => Task::STATUS_FINISHED,
+                ],
+                'placeholder' => "Choisir le statut",
+                "data" => Task::STATUS_PENDING,
+                'required'    => false,
+                'multiple' => false,
             ])
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
+            ->add('priority', ChoiceType::class, [
+                'choices' => [
+                    'Basse' => Task::PRIORITY_LOW,
+                    'Moyenne' => Task::PRIORITY_MEDIUM,
+                    'Haute' => Task::PRIORITY_HIGH,
+                ],
+                'placeholder' => "Choisir la priorité",
+                "data" => Task::PRIORITY_MEDIUM,
+                'required'    => false,
+                'multiple' => false,
             ])
-            ->add('updatedAt', null, [
+            ->add('limitDate', DateType::class, [
                 'widget' => 'single_text',
+                'html5' => true,
+            ])
+            ->add('createdAt', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
+            ])
+            ->add('updatedAt', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
+                'required' => false,
             ])
         ;
     }
