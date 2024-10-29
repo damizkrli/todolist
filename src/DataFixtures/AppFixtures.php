@@ -33,6 +33,8 @@ class AppFixtures extends Fixture
             $user->setFirstname($firstname);
             $user->setLastname($lastname);
             $user->setEmail("{$emailFirstname}.{$emailLastname}@" . $domain[array_rand($domain)]);
+            $user->setPassword($faker->password);
+            $user->setRoles(["ROLE_USER"]);
 
             $manager->persist($user);
         }
