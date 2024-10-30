@@ -40,23 +40,33 @@
                                     <p>Aucun utilisateur associé</p>
                                 {% endif %}
                             </td>
-                            <td>
-                                <div class="button-group">
-                                    <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-info me-3">
-                                        <i class="fa-regular fa-circle-question"></i>
-                                    </a>
-                                    <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-secondary me-3">
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                    <form method="post" action="{{ path('app_task_delete', {'id': task.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" class="d-inline">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa-regular fa-trash-can"></i>
-                                        </button>
-                                    </form>
-                                </div>
+                            {% if app.user %}
+                                <td>
+                                    <div class="button-group">
+                                        <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-info me-3">
+                                            <i class="fa-regular fa-circle-question"></i>
+                                        </a>
+                                        <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-secondary me-3">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </a>
+                                        <form method="post" action="{{ path('app_task_delete', {'id': task.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            {% else %}
+                                <td>
+                                    <div class="button-group">
+                                        <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-info me-3">
+                                            <i class="fa-regular fa-circle-question"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            {% endif %}
 
-                            </td>
                         </tr>
                         {% endif %}
                     {% else %}
@@ -68,40 +78,43 @@
                 </table>
             </div>
 
-            <div class="col-4 border-start border-dark">
-                <h1>Add new Task</h1>
+            {% if app.user %}
+                <div class="col-4 border-start border-dark">
+                    <h1>Add new Task</h1>
 
-                {{ form_start(form) }}
-                {{ form_row(form.name) }}
-                {{ form_row(form.category) }}
-                {{ form_row(form.description) }}
-                <div class="row">
-                    <div class="col-6">
-                        {{ form_row(form.status) }}
-                    </div>
-                    <div class="col-6">
-                        {{ form_row(form.priority) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        {{ form_row(form.limitDate) }}
-                    </div>
-                    <div class="col-6">
-                        {{ form_row(form.createdAt) }}
-                    </div>
-                </div>
-                <h4>Users available :</h4>
-                <div class="d-flex flex-wrap">
-                    {% for user in form.users %}
-                        <div class="me-3">
-                            {{ form_row(user) }}
+                    {{ form_start(form) }}
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.category) }}
+                    {{ form_row(form.description) }}
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form_row(form.status) }}
                         </div>
-                    {% endfor %}
-                </div>
+                        <div class="col-6">
+                            {{ form_row(form.priority) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form_row(form.limitDate) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(form.createdAt) }}
+                        </div>
+                    </div>
+                    <h4>Users available :</h4>
+                    <div class="d-flex flex-wrap">
+                        {% for user in form.users %}
+                            <div class="me-3">
+                                {{ form_row(user) }}
+                            </div>
+                        {% endfor %}
+                    </div>
                     <button class="btn btn-success me-5 mb-5">{{ button_label|default('Save') }}</button>
-                {{ form_end(form) }}
-            </div>
+                    {{ form_end(form) }}
+                </div>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}
