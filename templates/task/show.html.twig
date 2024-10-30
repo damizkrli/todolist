@@ -6,6 +6,8 @@
     <div class="container mt-5">
         <h1>{{ task.name }}</h1>
 
+        {% include 'details.html.twig' %}
+
         <table class="table">
             <tbody>
             <tr>
@@ -15,22 +17,6 @@
             <tr>
                 <th>Description</th>
                 <td>{{ task.description }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td>{{ task.category }}</td>
-            </tr>
-            <tr>
-                <th>LimitDate</th>
-                <td>{{ task.limitDate ? task.limitDate|date('d-m-Y') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ task.createdAt ? task.createdAt|date('d-m-Y') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ task.updatedAt ? task.updatedAt|date('d-m-Y') : '' }}</td>
             </tr>
             </tbody>
         </table>
