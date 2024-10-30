@@ -15,6 +15,18 @@
                 <td>{{ task.name }}</td>
             </tr>
             <tr>
+                <th>Users associated</th>
+                <td>
+                    {% if task.users is not empty %}
+                        {% for user in task.users %}
+                            <p>{{ user.firstname }} {{ user.lastname }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aucun utilisateur associé</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
                 <th>Description</th>
                 <td>{{ task.description }}</td>
             </tr>
