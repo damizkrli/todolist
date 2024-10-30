@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/task')]
+#[Route('/')]
 final class TaskController extends AbstractController
 {
     #[Route(name: 'app_task_index', methods: ['GET', 'POST'])]
