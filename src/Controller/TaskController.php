@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/task')]
-#[IsGranted("ROLE_USER")]
 final class TaskController extends AbstractController
 {
     #[Route(name: 'app_task_index', methods: ['GET', 'POST'])]
@@ -49,6 +48,7 @@ final class TaskController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_task_edit', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_USER")]
     public function edit(Request $request, Task $task, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TaskEditType::class, $task);
@@ -68,6 +68,7 @@ final class TaskController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_task_delete', methods: ['POST'])]
+    #[IsGranted("ROLE_USER")]
     public function delete(Request $request, Task $task, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->getPayload()->getString('_token'))) {

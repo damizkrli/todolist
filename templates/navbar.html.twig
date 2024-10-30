@@ -1,6 +1,10 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand">Welcome Back, {{ app.user.firstname }} {{ app.user.lastname }} 🖖</a>
+        {% if app.user %}
+            <a class="navbar-brand">Welcome Back, {{ app.user.firstname }} {{ app.user.lastname }} 🖖</a>
+        {% else %}
+            <a class="navbar-brand">Welcome Back, Stranger 🖖</a>
+        {% endif %}
         <div class="d-flex">
             {% if app.user %}
                 <a class="btn btn-danger btn-sm" href="{{ path('app_logout') }}">Logout</a>
