@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Task;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -74,6 +75,13 @@ class TaskType extends AbstractType
                 },
                 'multiple' => true,
                 'expanded' => true,
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Select a category',
+                'required' => true,
+                'mapped' => true,
             ])
         ;
     }

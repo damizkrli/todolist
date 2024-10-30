@@ -38,9 +38,6 @@ class Task
     #[ORM\Column(type: Types::TEXT)]
     private ?string $priority;
 
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
-
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $limiteDate = null;
 
@@ -56,6 +53,9 @@ class Task
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
+
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    private ?Category $category;
 
     public function __toString(): string
     {
@@ -104,13 +104,13 @@ class Task
         return $this->category;
     }
 
-    public function setCategory(string $category): static
+    public function setCategory(?Category $category): static
     {
         $this->category = $category;
 
         return $this;
     }
-
+    
     public function getStatus(): ?string
     {
         return $this->status;
