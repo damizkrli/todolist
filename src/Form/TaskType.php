@@ -17,74 +17,64 @@ class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-        $isEditMode = $options['edit_mode'];
-
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Name',
+                'attr' => [
+                    'placeholder' => 'Something to do...'
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
+                'attr' => [
+                    'placeholder' => 'This is the description...',
+                    'rows' => 7,
+                ]
             ])
             ->add('category', TextType::class, [
                 'label' => 'Category',
+                'attr' => [
+                    'placeholder' => 'Work, Personal...',
+                ]
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
-                    'En attente' => Task::STATUS_PENDING,
-                    'En cours' => Task::STATUS_PROGRESS,
-                    'Finie' => Task::STATUS_FINISHED,
+                    'Waiting' => Task::STATUS_PENDING,
+                    'In progress' => Task::STATUS_PROGRESS,
+                    'Finish' => Task::STATUS_FINISHED,
                 ],
-                'placeholder' => "Choisir le statut",
-                "data" => Task::STATUS_PENDING,
+                'placeholder' => "Choose status",
+                'data' => Task::STATUS_PENDING,
                 'required'    => false,
                 'multiple' => false,
             ])
             ->add('priority', ChoiceType::class, [
                 'choices' => [
-                    'Basse' => Task::PRIORITY_LOW,
-                    'Moyenne' => Task::PRIORITY_MEDIUM,
-                    'Haute' => Task::PRIORITY_HIGH,
+                    'Low' => Task::PRIORITY_LOW,
+                    'Medium' => Task::PRIORITY_MEDIUM,
+                    'High' => Task::PRIORITY_HIGH,
                 ],
-                'placeholder' => "Choisir la priorité",
-                "data" => Task::PRIORITY_MEDIUM,
+                'placeholder' => "Choose priority",
+                'data' => Task::PRIORITY_MEDIUM,
                 'required'    => false,
                 'multiple' => false,
-                'attr' => [
-                    'readonly' => $isEditMode,
-                ],
             ])
             ->add('limitDate', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
-                'attr' => [
-                    'readonly' => $isEditMode,
-                ],
             ])
             ->add('createdAt', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
-                'attr' => [
-                    'readonly' => $isEditMode,
-                ],
-            ])
-            ->add('updatedAt', DateType::class, [
-                'widget' => 'single_text',
-                'html5' => true,
-                'required' => false,
-                'attr' => [
-                    'readonly' => $isEditMode,
-                ],
             ])
             ->add('users', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => function (User $user) {
                     return $user->getFirstname() . ' ' . $user->getLastname();
                 },
-                'multiple' => true, // Permet de sélectionner plusieurs utilisateurs
-                'expanded' => true, // Affiche les utilisateurs sous forme de cases à cocher
-            ]);
+                'multiple' => true,
+                'expanded' => true,
+            ])
         ;
     }
 
@@ -92,9 +82,6 @@ class TaskType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Task::class,
-            'edit_mode' => false,
         ]);
-
-        $resolver->setAllowedTypes('edit_mode', 'bool');
     }
 }

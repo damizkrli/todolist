@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Form\TaskEditType;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,6 +27,7 @@ final class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             $task->setAuthor($user);
+            $task->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->persist($task);
             $entityManager->flush();
 
@@ -49,9 +51,7 @@ final class TaskController extends AbstractController
     #[Route('/{id}/edit', name: 'app_task_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Task $task, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(TaskType::class, $task, [
-            'edit_mode' => true,
-        ]);
+        $form = $this->createForm(TaskEditType::class, $task);
 
         $form->handleRequest($request);
 

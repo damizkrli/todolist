@@ -3,14 +3,11 @@
 {% block title %}Task{% endblock %}
 
 {% block body %}
-    <h1>Task</h1>
+    <div class="container mt-5">
+        <h1>{{ task.name }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ task.id }}</td>
-            </tr>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Name</th>
                 <td>{{ task.name }}</td>
@@ -25,22 +22,22 @@
             </tr>
             <tr>
                 <th>LimitDate</th>
-                <td>{{ task.limitDate ? task.limitDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ task.limitDate ? task.limitDate|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
                 <th>CreatedAt</th>
-                <td>{{ task.createdAt ? task.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ task.createdAt ? task.createdAt|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
                 <th>UpdatedAt</th>
-                <td>{{ task.updatedAt ? task.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ task.updatedAt ? task.updatedAt|date('d-m-Y') : '' }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_task_index') }}">back to list</a>
+        <a class="btn btn-primary me-2" href="{{ path('app_task_index') }}">
+            <i class="fa-solid fa-chevron-left"></i>
+        </a>
 
-    <a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>
-
-    {{ include('task/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
